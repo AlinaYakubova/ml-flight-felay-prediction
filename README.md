@@ -45,9 +45,9 @@ The following models were tested:
 - Decision Tree
 - Random Forest
 - LightGBM
-- Feature-engineered LightGBM
+- Feature-engineered LightGBM with hyperparameter tuning
 
-The best overall performance was achieved by the feature-engineered LightGBM model, which provided the strongest balance between precision and recall.
+The best overall performance was achieved by the feature-engineered LightGBM model with hyperparameter tuning, which provided the strongest balance between precision and recall.
 
 ## Repository Structure
 
@@ -57,6 +57,20 @@ The best overall performance was achieved by the feature-engineered LightGBM mod
 ├── LICENSE
 ├── requirements.txt
 ├── flight_delay_prediction.ipynb
+├── Figures
+│   ├── Boxplot_diagram1.png
+│   ├── Boxplot_diagram2.png
+│   ├── Feature importance random forest.png
+│   ├── Feature impotance final Light GBM.png
+│   ├── Flight Delay Distribution.png
+│   ├── Model results summary.png
+│   ├── Roc curve Gaussian.png
+│   ├── Roc curve decision tree.png
+│   ├── Roc curve final LightGBM.png
+│   ├── Roc curve knn.png
+│   ├── Roc curve random forest.png
+│   ├── SHAP values final Light GBM.png
+│   └── SHAP values random forest.png
 ├── notes
 │   └── column_description.md
 └── Report
@@ -86,18 +100,18 @@ The results show that flight delay prediction is a challenging classification ta
 
 | Model | Dataset | Accuracy | Precision | Recall | F1-score | ROC-AUC |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| LightGBM - Feature Engineered | full (1.3M) | 0.67 | 0.32 | 0.65 | 0.43 | 0.73 |
-| LightGBM | full (1.3M) | 0.66 | 0.31 | 0.65 | 0.42 | 0.72 |
-| Random Forest | full (1.3M) | 0.60 | 0.28 | 0.68 | 0.39 | 0.69 |
-| Decision Tree (full) | full (1.3M) | 0.64 | 0.29 | 0.60 | 0.39 | 0.68 |
-| Decision Tree (sample) | sample (20k) | 0.60 | 0.26 | 0.60 | 0.36 | 0.68 |
-| GaussianNB | full (1.3M) | 0.73 | 0.29 | 0.28 | 0.29 | 0.62 |
-| GaussianNB | sample (20k) | 0.73 | 0.28 | 0.27 | 0.28 | 0.62 |
-| KNN | sample (20k) | 0.79 | 0.35 | 0.13 | 0.19 | 0.60 |
-| KNN + PCA | sample (20k) | 0.78 | 0.25 | 0.08 | 0.12 | 0.52 |
-| RIPPER | sample (20k) | 0.81 | 1.00 | 0.00 | 0.00 | 0.50 |
+| LightGBM - Feature Engineered + Hyperparameters | full (1.3M) | 0.67 | 0.32 | 0.65 | 0.43 | 0.73 |
+| LightGBM | full (1.3M) | 0.64 | 0.29 | 0.65 | 0.40 | 0.69 |
+| Random Forest | full (1.3M) | 0.58 | 0.27 | 0.69 | 0.39 | 0.67 |
+| Decision Tree (full) | full (1.3M) | 0.60 | 0.27 | 0.65 | 0.38 | 0.67 |
+| Decision Tree (sample) | sample (20k) | 0.59 | 0.26 | 0.64 | 0.37 | 0.66 |
+| GaussianNB | full (1.3M) | 0.71 | 0.28 | 0.33 | 0.30 | 0.61 |
+| GaussianNB | sample (20k) | 0.72 | 0.27 | 0.30 | 0.29 | 0.61 |
+| KNN | sample (20k) | 0.79 | 0.32 | 0.12 | 0.17 | 0.59 |
+| KNN + PCA | sample (20k) | 0.79 | 0.32 | 0.12 | 0.17 | 0.59 |
+| RIPPER | sample (20k) | 0.81 | 0.33 | 0.00 | 0.00 | 0.50 |
 
-Simple baseline models were limited by class imbalance and weak individual feature-target relationships. Tree-based models performed better because they can capture non-linear relationships and interactions between temporal, weather, airport, and operational features. However, the overall predictive performance remained moderate, suggesting that richer real-time operational data would be needed for more accurate delay prediction.
+Simple baseline models were limited by the scale of the dataset and weak individual feature-target relationships: distance-based and probabilistic approaches struggled to capture the complex interactions between features. Tree-based models performed better because they can model non-linear relationships and feature interactions without requiring scaling or strong distributional assumptions. However, the overall predictive performance remained moderate, suggesting that richer real-time operational data would be needed for more accurate delay prediction.
 
 ## Future Work
 
@@ -106,8 +120,6 @@ Several improvements could be explored in future work:
 - Add richer real-time operational data, such as live weather updates, aircraft rotation status, crew availability, gate availability, air traffic control restrictions, and previous flight delay information.
 - Use time-based validation instead of only random train-test splitting to better simulate real-world prediction on future flights.
 - Tune classification thresholds to improve the balance between precision and recall, especially because delayed flights are the minority class.
-- Apply additional imbalance-handling techniques, such as resampling, class weighting adjustments, or cost-sensitive learning.
 - Test more advanced gradient boosting configurations and perform broader hyperparameter optimization.
-- Calibrate predicted probabilities so that delay risk scores are easier to interpret and use in operational decision-making.
 - Analyze model performance separately by airport, carrier, month, and departure time to identify where the model works well and where it fails.
-- Build a simple prediction interface or dashboard to demonstrate how the model could support airline or airport decision-making.
+- Calibrate predicted probabilities so that delay risk scores are easier to interpret and use in operational decision-making.
