@@ -4,6 +4,8 @@ This Machine Learning project is dedicated to predicting flight departure delays
 
 The project explores the full machine learning workflow, from data import and data quality checks to feature engineering, model training, model evaluation, and interpretation of tree-based models.
 
+Link for presentation: https://canva.link/tmnbp5l7xugjozx
+
 ## Objectives
 
 - Build a machine learning model to predict whether a flight departure will be delayed by 15 minutes or more.
